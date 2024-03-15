@@ -26,11 +26,9 @@ const initialBalls: Ball[] = [
 
 const App = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [balls, setBalls] = useState<Ball[]>(initialBalls);
   const [selectedBall, setSelectedBall] = useState<Ball | null>(null);
   const [showColorMenu, setShowColorMenu] = useState(false);
-  setBalls(initialBalls);
-  
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -42,7 +40,7 @@ const App = () => {
       const mouseX = event.clientX - rect.left;
       const mouseY = event.clientY - rect.top;
 
-      balls.forEach(ball => {
+      initialBalls.forEach(ball => {
         const dx = ball.x - mouseX;
         const dy = ball.y - mouseY;
         const distance = Math.sqrt(dx * dx + dy * dy);
@@ -64,7 +62,7 @@ const App = () => {
       const mouseX = event.clientX - rect.left;
       const mouseY = event.clientY - rect.top;
 
-      balls.forEach((ball) => {
+      initialBalls.forEach((ball) => {
         const distance = Math.sqrt(
           (mouseX - ball.x) ** 2 + (mouseY - ball.y) ** 2
         );
@@ -79,14 +77,14 @@ const App = () => {
     };
 
     const updateGame = () => {
-      handleCollisions(balls, canvas);
-      updateBallsPosition(balls, canvas);
+      handleCollisions(initialBalls, canvas);
+      updateBallsPosition(initialBalls, canvas);
     };
 
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      balls.forEach((ball) => {
+      initialBalls.forEach((ball) => {
         ctx.beginPath();
         ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
         ctx.fillStyle = ball.color;
@@ -109,7 +107,7 @@ const App = () => {
       canvas.removeEventListener("click", handleMouseClick);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
     };
-  }, [balls, selectedBall]);
+  }, []);
 
   const changeBallColor = (color: string) => {
     if (selectedBall) {
