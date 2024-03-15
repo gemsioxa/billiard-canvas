@@ -29,7 +29,8 @@ const App = () => {
   const [balls, setBalls] = useState<Ball[]>(initialBalls);
   const [selectedBall, setSelectedBall] = useState<Ball | null>(null);
   const [showColorMenu, setShowColorMenu] = useState(false);
-
+  setBalls(initialBalls);
+  
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
